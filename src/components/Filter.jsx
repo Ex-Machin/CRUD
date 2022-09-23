@@ -1,6 +1,11 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterUser, getFilterQueries, sortUser } from "../redux/slices/UsersSlice";
+import {
+  filterUser,
+  getFilterQueries,
+  sortUser,
+} from "../redux/slices/UsersSlice";
+import "../styles/filter.css";
 
 const Filter = () => {
   const filterQueries = useSelector(getFilterQueries);
@@ -16,12 +21,20 @@ const Filter = () => {
 
   return (
     <Fragment>
-      <input
-        value={filterQueries}
-        placeholder="Найти"
-        onChange={(e) => onChangeHandler(e)}
-      />
-      <button onClick={onClickHandler}>Сортировать по дате добавления</button>
+      <div className="wrap">
+        <div className="search">
+          <input
+            type="text"
+            className="searchTerm"
+            placeholder="What are you looking for?"
+            value={filterQueries}
+            onChange={(e) => onChangeHandler(e)}
+          />
+          <button onClick={onClickHandler} className="searchButton">
+            Sort by date
+          </button>
+        </div>
+      </div>
     </Fragment>
   );
 };

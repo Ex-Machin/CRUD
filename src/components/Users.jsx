@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HTTP_STATUSES } from "../redux/htttpStatuses";
 import {
@@ -11,6 +11,7 @@ import {
   getUsers,
   getErrorMessage,
 } from "../redux/slices/UsersSlice";
+import "../styles/users.css";
 
 const Users = () => {
   const users = useSelector(getUsers);
@@ -35,52 +36,72 @@ const Users = () => {
   };
 
   const onClickHandler = (e) => {
-    const parentElementId = getParentElement(e)
+    const parentElementId = getParentElement(e);
     setEditMode(parentElementId);
   };
   const onBlurHandler = (e) => {
-    const userId = getParentElement(e)
+    const userId = getParentElement(e);
     value && dispatch(changeUserName({ userId, value }));
     setEditMode(false);
   };
   const onDeleteAction = (e) => {
-    const parentElementId = getParentElement(e)
+    const parentElementId = getParentElement(e);
+    console.log("e :>> ", e);
+    console.log("parentElementId", parentElementId);
     dispatch(deleteUser(parentElementId));
   };
 
   return (
-    <div className="cards__container">
-      {loading === HTTP_STATUSES.PENDING ? (
-        "Loading..."
-      ) : (
-        <div className="cards__block block-card">
-          {data.map(({ id, name, email, phone }) => {
-            return (
-              <div key={id} id={id}>
-                {editMode === id ? (
-                  <input
-                    value={value}
-                    autoFocus
-                    onChange={(e) => setValue(e.target.value)}
-                    onBlur={(e) => onBlurHandler(e)}
-                  />
-                ) : (
-                  <div
-                    className="block-card__name"
-                    onClick={(e) => onClickHandler(e)}
-                  >
-                    {name}
-                  </div>
-                )}
-                <div className="block-card__email">{email}</div>
-                <div className="block-card__phone">{phone}</div>
-                <button onClick={onDeleteAction}> Detele</button>
-              </div>
-            );
-          })}
-        </div>
-      )}
+    <div>
       {errorMessage}
+      <div className="table">
+        <table cellSpacing="0" cellPadding="0">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Phone</td>
+              <td>Options</td>
+            </tr>
+          </thead>
+          <tbody>
+            {loading === HTTP_STATUSES.PENDING ? (
+              "Loading..."
+            ) : (
+              <Fragment>
+                {data.map(({ id, name, email, phone }) => {
+                  return (
+                    <tr
+                      key={id}
+                      id={id}
+                      className={editMode === id ? "success" : ""}
+                    >
+                      {editMode === id ? (
+                        <input
+                          value={value}
+                          autoFocus
+                          onChange={(e) => setValue(e.target.value)}
+                          onBlur={(e) => onBlurHandler(e)}
+                        />
+                      ) : (
+                        <td
+                          className="block-card__name"
+                          onClick={(e) => onClickHandler(e)}
+                        >
+                          {name}
+                        </td>
+                      )}
+                      <td className="block-card__email">{email}</td>
+                      <td className="block-card__phone">{phone}</td>
+                      <td onClick={onDeleteAction}>Delete</td>
+                    </tr>
+                  );
+                })}
+              </Fragment>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import { useFormik } from "formik";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { addUser, getErrorMessage } from "../redux/slices/UsersSlice";
+import { addUser } from "../redux/slices/UsersSlice";
+import "../styles/user-form.css";
 
 const UserForm = () => {
   const dispatch = useDispatch();
-  const errorMessage = useSelector(getErrorMessage)
   const validationSchema = yup.object().shape({
     name: yup.string().required("Пожалуйста введите имя"),
     email: yup.string().required("Пожалуйста введите эмеил"),
@@ -23,61 +23,49 @@ const UserForm = () => {
   });
 
   return (
-    <div>
-      <div>
-        <h1>Добавь нового сотрудника</h1>
+    <div className="section">
+      <h2>Add new user</h2>
 
-        <form onSubmit={formik.handleSubmit}>
-          <div className="name-field">
-            <label htmlFor="name">
-              Введите имя<span>*</span>
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              {...formik.getFieldProps("name")}
-              //isInvalid={formik.touched.phone && !!formik.errors.phone}
-            />
-            <span>{formik.errors.name}</span>
-          </div>
-          <div className="email-field">
-            <label htmlFor="email">
-              Введите почту<span>*</span>
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="on"
-              required
-              {...formik.getFieldProps("email")}
-              //isInvalid={formik.touched.password && !!formik.errors.password}
-            />
-            <span>{formik.errors.email}</span>
-          </div>
-          <div className="phone-field">
-            <label htmlFor="phone">
-              Введите номер телефона<span>*</span>
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              autoComplete="on"
-              required
-              {...formik.getFieldProps("phone")}
-              //isInvalid={formik.touched.password && !!formik.errors.password}
-            />
-            <span>{formik.errors.phone}</span>
-          </div>
-          {errorMessage}
-          <button type="submit" disabled={formik.isSubmitting}>
-            Submit
-          </button>
-        </form>
-      </div>
+      <form className="form-label form-css-label " onSubmit={formik.handleSubmit}>
+        <fieldset>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            {...formik.getFieldProps("name")}
+          />
+          <label htmlFor="name">Name</label>
+          <span>{formik.errors.name}</span>
+        </fieldset>
+        <fieldset>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="on"
+            required
+            {...formik.getFieldProps("email")}
+          />
+          <label htmlFor="email">Email</label>
+          <span>{formik.errors.email}</span>
+        </fieldset>
+        <fieldset>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="on"
+            required
+            {...formik.getFieldProps("phone")}
+          />
+          <label htmlFor="phone">Phone</label>
+          <span>{formik.errors.phone}</span>
+        </fieldset>
+        <button type="submit" disabled={formik.isSubmitting}>
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
