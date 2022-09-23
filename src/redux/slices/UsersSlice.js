@@ -1,7 +1,7 @@
 import {
   createAsyncThunk,
   createSelector,
-  createSlice
+  createSlice,
 } from "@reduxjs/toolkit";
 import usersAPI from "../../api/usersAPI";
 import { HTTP_STATUSES } from "../htttpStatuses";
@@ -10,6 +10,20 @@ const namespace = "user";
 
 export const fetchUsers = createAsyncThunk(`${namespace}/fetchUsers`, () =>
   usersAPI.fetchUsers()
+);
+
+export const addUser = createAsyncThunk(`${namespace}/addUser`, (formBody) =>
+  usersAPI.addUser(formBody)
+);
+
+export const deleteUser = createAsyncThunk(
+  `${namespace}/deleteUser`,
+  (userId) => usersAPI.deleteUser(userId)
+);
+
+export const changeUserName = createAsyncThunk(
+  `${namespace}/changeUserName`,
+  ({ userId, value }) => usersAPI.changeUserName(userId, value)
 );
 
 const baseSelector = (state) => state.user;
@@ -43,41 +57,10 @@ const UsersSlice = createSlice({
     erorMessage: "",
   },
   reducers: {
-    addUser(state, { payload }) {
-      const payloadCopy = { ...payload };
-      payloadCopy.id = state.userData[state.userData.length - 1].id + 1;
-      state.userData.push(payloadCopy);
-    },
     sortUser(state) {
       state.filteredUserData.length
         ? state.filteredUserData.reverse()
         : state.userData.reverse();
-    },
-    editUser(state, { payload }) {
-      state.userData.forEach((user, i) => {
-        if (user.id === payload.parentElementId) {
-          state.userData[i].name = payload.value;
-          localStorage.setItem("users", JSON.stringify(state.userData));
-        }
-      });
-      state.filteredUserData.forEach((user, i) => {
-        if (user.id === payload.parentElementId) {
-          state.filteredUserData[i].name = payload.value;
-        }
-      });
-    },
-    deleteUser(state, { payload }) {
-      state.userData.forEach((user, i) => {
-        if (user.id === payload) {
-          state.userData.splice(i, 1);
-          localStorage.setItem("users", JSON.stringify(state.userData));
-        }
-      });
-      state.filteredUserData.forEach((user, i) => {
-        if (user.id === payload) {
-          state.filteredUserData.splice(i, 1);
-        }
-      });
     },
     filterUser(state, { payload }) {
       state.filterQueries = payload;
@@ -103,10 +86,69 @@ const UsersSlice = createSlice({
     },
     [fetchUsers.rejected](state) {
       state.loading = HTTP_STATUSES.REJECTED;
+      state.erorMessage = 'error'
+    },
+    [addUser.pending](state) {
+      state.loading = HTTP_STATUSES.PENDING;
+    },
+    [addUser.fulfilled](state, { payload }) {
+      state.loading = HTTP_STATUSES.FULFILLED;
+      const payloadCopy = { ...payload };
+      payloadCopy.id = state.userData.length + 1;
+      state.userData.push(payloadCopy);
+      localStorage.setItem("users", JSON.stringify(state.userData));
+    },
+    [addUser.rejected](state) {
+      state.loading = HTTP_STATUSES.REJECTED;
+      state.erorMessage = 'error'
+    },
+    [deleteUser.pending](state) {
+      state.loading = HTTP_STATUSES.PENDING;
+    },
+    [deleteUser.fulfilled](state, { payload }) {
+      state.loading = HTTP_STATUSES.FULFILLED;
+      state.userData.forEach((user, i) => {
+        if (user.id === payload.userId) {
+          state.userData.splice(i, 1);
+          state.userData.map((element, i) => {
+            return (element.id = i + 1);
+          });
+          localStorage.setItem("users", JSON.stringify(state.userData));
+        }
+      });
+      state.filteredUserData.forEach((user, i) => {
+        if (user.id === payload.userId) {
+          state.filteredUserData.splice(i, 1);
+        }
+      });
+    },
+    [deleteUser.rejected](state) {
+      state.loading = HTTP_STATUSES.REJECTED;
+      state.erorMessage = 'error'
+    },
+    [changeUserName.pending](state) {
+      state.loading = HTTP_STATUSES.PENDING;
+    },
+    [changeUserName.fulfilled](state, { payload }) {
+      state.loading = HTTP_STATUSES.FULFILLED;
+      state.userData.forEach((user, i) => {
+        if (user.id === payload.userId) {
+          state.userData[i].name = payload.value;
+          localStorage.setItem("users", JSON.stringify(state.userData));
+        }
+      });
+      state.filteredUserData.forEach((user, i) => {
+        if (user.id === payload.userId) {
+          state.filteredUserData[i].name = payload.value;
+        }
+      });
+    },
+    [changeUserName.rejected](state) {
+      state.loading = HTTP_STATUSES.REJECTED;
+      state.erorMessage = 'error'
     },
   },
 });
 
-export const { addUser, filterUser, sortUser, editUser, deleteUser } =
-  UsersSlice.actions;
+export const { filterUser, sortUser } = UsersSlice.actions;
 export default UsersSlice.reducer;

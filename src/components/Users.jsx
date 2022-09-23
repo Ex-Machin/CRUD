@@ -2,22 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HTTP_STATUSES } from "../redux/htttpStatuses";
 import {
-  editUser,
+  changeUserName,
   fetchUsers,
   deleteUser,
   getFilteredUserData,
   getFilterQueries,
   getLoadingStatus,
   getUsers,
+  getErrorMessage,
 } from "../redux/slices/UsersSlice";
 
 const Users = () => {
   const users = useSelector(getUsers);
   const dispatch = useDispatch();
   const filteredUserData = useSelector(getFilteredUserData);
+  const errorMessage = useSelector(getErrorMessage);
   const filterQueries = useSelector(getFilterQueries);
   const loading = useSelector(getLoadingStatus);
-  const [editMode, setEditMode] = useState(0);
+  const [editMode, setEditMode] = useState(false);
   const [value, setValue] = useState("");
 
   const data = filterQueries ? filteredUserData : users;
@@ -37,8 +39,8 @@ const Users = () => {
     setEditMode(parentElementId);
   };
   const onBlurHandler = (e) => {
-    const parentElementId = getParentElement(e)
-    value && dispatch(editUser({ value, parentElementId }));
+    const userId = getParentElement(e)
+    value && dispatch(changeUserName({ userId, value }));
     setEditMode(false);
   };
   const onDeleteAction = (e) => {
@@ -78,6 +80,7 @@ const Users = () => {
           })}
         </div>
       )}
+      {errorMessage}
     </div>
   );
 };
