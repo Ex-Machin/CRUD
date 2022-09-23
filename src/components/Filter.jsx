@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   filterUser,
   getFilterQueries,
-  sortUser,
+  sortUser
 } from "../redux/slices/UsersSlice";
 import "../styles/filter.css";
 

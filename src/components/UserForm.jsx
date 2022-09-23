@@ -8,9 +8,9 @@ import "../styles/user-form.css";
 const UserForm = () => {
   const dispatch = useDispatch();
   const validationSchema = yup.object().shape({
-    name: yup.string().required("Пожалуйста введите имя"),
-    email: yup.string().required("Пожалуйста введите эмеил"),
-    phone: yup.number().required("Пожалуйста введите телефон"),
+    name: yup.string().required("Please enter name"),
+    email: yup.string().required("Please enter email"),
+    phone: yup.number().required("Please enter phone"),
   });
 
   const formik = useFormik({
@@ -26,7 +26,10 @@ const UserForm = () => {
     <div className="section">
       <h2>Add new user</h2>
 
-      <form className="form-label form-css-label " onSubmit={formik.handleSubmit}>
+      <form
+        className="form-label form-css-label "
+        onSubmit={formik.handleSubmit}
+      >
         <fieldset>
           <input
             id="name"
@@ -62,9 +65,7 @@ const UserForm = () => {
           <label htmlFor="phone">Phone</label>
           <span>{formik.errors.phone}</span>
         </fieldset>
-        <button type="submit" disabled={formik.isSubmitting}>
-          Submit
-        </button>
+        <button type="submit" disabled={formik.isSubmitting} className="btn btn-round b-level-2 b-type-4">Submit</button>
       </form>
     </div>
   );

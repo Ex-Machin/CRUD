@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { HTTP_STATUSES } from "../redux/htttpStatuses";
 import {
   changeUserName,
-  fetchUsers,
   deleteUser,
+  fetchUsers,
+  getErrorMessage,
   getFilteredUserData,
   getFilterQueries,
   getLoadingStatus,
   getUsers,
-  getErrorMessage,
 } from "../redux/slices/UsersSlice";
 import "../styles/users.css";
 
@@ -39,7 +39,7 @@ const Users = () => {
     const parentElementId = getParentElement(e);
     setEditMode(parentElementId);
   };
-  const onBlurHandler = (e) => {
+  const onChangeHandler = (e) => {
     const userId = getParentElement(e);
     value && dispatch(changeUserName({ userId, value }));
     setEditMode(false);
@@ -66,23 +66,31 @@ const Users = () => {
           </thead>
           <tbody>
             {loading === HTTP_STATUSES.PENDING ? (
-              "Loading..."
+              <img
+                className="loader"
+                src="https://media.giphy.com/media/J6ZIb7i8xsJeuvBy7y/giphy.gif"
+                alt="loader"
+              />
             ) : (
               <Fragment>
                 {data.map(({ id, name, email, phone }) => {
                   return (
-                    <tr
-                      key={id}
-                      id={id}
-                      className={editMode === id ? "success" : ""}
-                    >
+                    <tr key={id} id={id}>
                       {editMode === id ? (
-                        <input
-                          value={value}
-                          autoFocus
-                          onChange={(e) => setValue(e.target.value)}
-                          onBlur={(e) => onBlurHandler(e)}
-                        />
+                        <Fragment>
+                          <input
+                            value={value}
+                            autoFocus
+                            onChange={(e) => setValue(e.target.value)}
+                            onBlur={(e) => onChangeHandler(e)}
+                          />
+                          <button
+                            className="change-button"
+                            onClick={(e) => onChangeHandler(e)}
+                          >
+                            Change
+                          </button>
+                        </Fragment>
                       ) : (
                         <td
                           className="block-card__name"

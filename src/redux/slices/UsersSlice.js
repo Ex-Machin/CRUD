@@ -65,15 +65,15 @@ const UsersSlice = createSlice({
     filterUser(state, { payload }) {
       state.filterQueries = payload;
       const searchQuery = payload.toLowerCase();
-      state.filteredUserData = state.userData.filter(
-        ({ name, email, phone }) => {
-          return (
-            name.toLowerCase().includes(searchQuery) ||
-            email.toLowerCase().includes(searchQuery) ||
-            phone.toLowerCase().includes(searchQuery)
-          );
-        }
-      );
+      state.filteredUserData = !!searchQuery
+        ? state.userData.filter(({ name, email, phone }) => {
+            return (
+              name.toLowerCase().includes(searchQuery) ||
+              email.toLowerCase().includes(searchQuery) ||
+              phone.toLowerCase().includes(searchQuery)
+            );
+          })
+        : [];
     },
   },
   extraReducers: {

@@ -1,3 +1,7 @@
+.loader {
+	margin: 0 auto;
+}
+
 .table table {
 	width: 100%;
 	font-size: 16px;
@@ -5,7 +9,6 @@
 	border-radius: 10px;
 	box-shadow: 0 25px 20px -25px #000;
 }
-
 
 .table table thead {
 	border-spacing: 0;
@@ -30,49 +33,12 @@
 .table table tbody tr:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 10px 20px -15px #000;
-	background-color: #ededed 1c;
+	color: #38e928;
+	background: #bcffb7;
 }
-
-.table table tbody tr.success td {
-	color: #46c93a;
-	background: #e8f5e7;
-}
-
-.table table tfoot tr td {
-	border-radius: 0 0 10px 10px;
-}
-
-.table table tfoot tr td {
-	padding: 3px 10px;
-	background-color: #fbfbfb;
-	text-align: right;
-}
-
-.pagination {
-	display: flex;
-	position: relative;
-	right: 10px;
-	justify-content: flex-end;
-	gap: 5px;
-}
-
-.pagination .page {
-	width: 10px;
-	height: 30px;
-	flex-basis: 30px;
-	text-align: center;
-	box-sizing: border-box;
-	padding-top: 6px;
-	background: #f0f3f4;
-	border-radius: 7px;
-	color: #636983;
-	cursor: pointer;
-}
-
-.pagination .page.active {
-	background-color: #1f74ff;
-	color: white;
-	font-weight: 600;
+.change-button {
+	display: inline;
+	
 }
 
 @media (max-width: 700px) {
