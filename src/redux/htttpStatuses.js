@@ -1,0 +1,5 @@
+export const HTTP_STATUSES = {
+    PENDING: 'PENDING',
+    FULFILLED: 'FULFILLED',
+    REJECTED: 'REJECTED'
+}
