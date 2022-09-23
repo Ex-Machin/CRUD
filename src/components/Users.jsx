@@ -38,7 +38,7 @@ const Users = () => {
   };
   const onBlurHandler = (e) => {
     const parentElementId = getParentElement(e)
-    dispatch(editUser({ value, parentElementId }));
+    value && dispatch(editUser({ value, parentElementId }));
     setEditMode(false);
   };
   const onDeleteAction = (e) => {
@@ -58,6 +58,7 @@ const Users = () => {
                 {editMode === id ? (
                   <input
                     value={value}
+                    autoFocus
                     onChange={(e) => setValue(e.target.value)}
                     onBlur={(e) => onBlurHandler(e)}
                   />

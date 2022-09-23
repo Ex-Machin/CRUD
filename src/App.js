@@ -1,12 +1,12 @@
 import React from "react";
-import "./App.css";
+import './styles/app.css'
 import Filter from "./components/Filter";
 import UserForm from "./components/UserForm";
 import Users from "./components/Users";
 
 const App = () => {
   return (
-    <div className="container">
+    <div className='container'>
       <Filter />
       <Users />
       <UserForm />
