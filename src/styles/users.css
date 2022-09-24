@@ -2,47 +2,79 @@
 	margin: 0 auto;
 }
 
-.table table {
+.table-container .table {
 	width: 100%;
 	font-size: 16px;
 	background-color: white;
 	border-radius: 10px;
 	box-shadow: 0 25px 20px -25px #000;
 }
+.pointer {
+	cursor: pointer;
+}
 
-.table table thead {
+.table-container .table .thead .tr {
+	display: grid;
+	grid-template-columns: 25% 30% 25% 20%;
+	grid-template-rows: auto;
+}
+
+.table-container .table .thead {
 	border-spacing: 0;
 }
 
-.table table thead td {
+.table-container .table .thead .td {
 	font-size: 18px;
 	font-weight: 600;
 	color: #666;
 	padding: 10px;
 }
 
-.table table tbody tr {
+.table-container .table .tbody .tr {
 	transition: all 0.2s;
+	display: grid;
+	grid-template-columns: 25% 30% 25% 20%;
+	grid-template-rows: auto;
 }
 
-.table table tbody tr td {
+.table-container .table .tbody .tr .td {
 	padding: 10px;
 	color: #666;
 }
+.table-container .table .tbody .tr span {
+display: none;
+}
 
-.table table tbody tr:hover {
+.table-container .table .tbody .tr:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 10px 20px -15px #000;
 	color: #38e928;
 	background: #bcffb7;
 }
+
 .change-button {
 	display: inline;
-	
+
 }
 
-@media (max-width: 700px) {
-	.table {
-		width: 90%;
+@media (max-width: 869px) {
+
+	.table-container .table .thead .tr {
+		display: none;
 	}
+	.table-container .table .tbody .tr span {
+		margin-top: -27px;
+		position: absolute;
+		right: 36px;
+		display: block;
+		font-size: 18px;
+		font-weight: 600;
+		color: #666;
+		padding: 10px;
+		text-align: right;
+	}
+	.table-container .table .tbody .tr {
+		display: block;
+	}
+
 }

@@ -54,17 +54,17 @@ const Users = () => {
   return (
     <div>
       {errorMessage}
-      <div className="table">
-        <table cellSpacing="0" cellPadding="0">
-          <thead>
-            <tr>
-              <td>Name</td>
-              <td>Email</td>
-              <td>Phone</td>
-              <td>Options</td>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="table-container">
+        <div className="table">
+          <div className="thead">
+            <div className="tr">
+              <div className="td">Name</div>
+              <div className="td">Email</div>
+              <div className="td">Phone</div>
+              <div className="td">Options</div>
+            </div>
+          </div>
+          <div className="tbody">
             {loading === HTTP_STATUSES.PENDING ? (
               <img
                 className="loader"
@@ -75,32 +75,50 @@ const Users = () => {
               <Fragment>
                 {data.map(({ id, name, email, phone }) => {
                   return (
-                    <tr key={id} id={id}>
-                      {editMode === id ? (
-                        <input
-                          value={value}
-                          autoFocus
-                          onChange={(e) => setValue(e.target.value)}
-                          onBlur={(e) => onChangeHandler(e)}
-                        />
-                      ) : (
-                        <td
-                          className="block-card__name"
-                          onClick={(e) => onClickHandler(e)}
-                        >
-                          {name}
-                        </td>
-                      )}
-                      <td className="block-card__email">{email}</td>
-                      <td className="block-card__phone">{phone}</td>
-                      <td onClick={onDeleteAction}>Delete</td>
-                    </tr>
+                    <Fragment>
+                      {/* <div className="tr">
+                        <div className="td">Name</div>
+                       
+                        <div className="td">Phone</div>
+                        <div className="td">Options</div>
+                      </div> */}
+                      <div key={id} id={id} className="tr">
+                        {editMode === id ? (
+                          <input
+                            value={value}
+                            autoFocus
+                            onChange={(e) => setValue(e.target.value)}
+                            onBlur={(e) => onChangeHandler(e)}
+                          />
+                        ) : (
+                          <Fragment style={{ display: "flex" }}>
+                            <div
+                              className="block-card__name td pointer"
+                              onClick={(e) => onClickHandler(e)}
+                            >
+                              {name}
+                              <span>Name</span>
+                            </div>
+                          </Fragment>
+                        )}
+                        <div className="block-card__email td">
+                          {email} <span>Email</span>
+                        </div>
+                        <div className="block-card__phone td">
+                          {phone} <span>Phone</span>
+                        </div>
+                        <div onClick={onDeleteAction} className="td pointer">
+                          Delete
+                          <span>Options</span>
+                        </div>
+                      </div>
+                    </Fragment>
                   );
                 })}
               </Fragment>
             )}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   );
