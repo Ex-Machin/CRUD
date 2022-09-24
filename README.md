@@ -19,7 +19,7 @@ Ta aplikacja realizuje następującą funkcjonalność
 
 ![image](https://user-images.githubusercontent.com/71015266/192089414-8bcbeb79-a38f-42cb-90d0-206c3e9422f2.png)
 
-Żeby zastosować zmiany, trzeba wyjść z tego inputa (onBlur evenet)
+Żeby zastosować zmiany, trzeba wyjść z tego inputa (onBlur event)
 
 ![image](https://user-images.githubusercontent.com/71015266/192089662-0853a707-283d-43a4-a7bc-9222cd75b45e.png)
 
