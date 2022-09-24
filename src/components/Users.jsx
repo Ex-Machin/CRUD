@@ -77,20 +77,12 @@ const Users = () => {
                   return (
                     <tr key={id} id={id}>
                       {editMode === id ? (
-                        <Fragment>
-                          <input
-                            value={value}
-                            autoFocus
-                            onChange={(e) => setValue(e.target.value)}
-                            onBlur={(e) => onChangeHandler(e)}
-                          />
-                          <button
-                            className="change-button"
-                            onClick={(e) => onChangeHandler(e)}
-                          >
-                            Change
-                          </button>
-                        </Fragment>
+                        <input
+                          value={value}
+                          autoFocus
+                          onChange={(e) => setValue(e.target.value)}
+                          onBlur={(e) => onChangeHandler(e)}
+                        />
                       ) : (
                         <td
                           className="block-card__name"
