@@ -6,8 +6,7 @@ Aby uruchomić aplikację, musisz sklonować repozytorium git, a następnie uruc
 
 
 ```
-npm i
-npm start
+npm i && npm start
 ```
 
 Ta aplikacja realizuje następującą funkcjonalność
