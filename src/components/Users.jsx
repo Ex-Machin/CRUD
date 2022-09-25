@@ -46,8 +46,6 @@ const Users = () => {
   };
   const onDeleteAction = (e) => {
     const parentElementId = getParentElement(e);
-    console.log("e :>> ", e);
-    console.log("parentElementId", parentElementId);
     dispatch(deleteUser(parentElementId));
   };
 
@@ -76,12 +74,6 @@ const Users = () => {
                 {data.map(({ id, name, email, phone }) => {
                   return (
                     <Fragment>
-                      {/* <div className="tr">
-                        <div className="td">Name</div>
-                       
-                        <div className="td">Phone</div>
-                        <div className="td">Options</div>
-                      </div> */}
                       <div key={id} id={id} className="tr">
                         {editMode === id ? (
                           <input
