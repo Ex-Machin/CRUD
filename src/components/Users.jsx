@@ -83,7 +83,7 @@ const Users = () => {
                             onBlur={(e) => onChangeHandler(e)}
                           />
                         ) : (
-                          <Fragment style={{ display: "flex" }}>
+                          <Fragment>
                             <div
                               className="block-card__name td pointer"
                               onClick={(e) => onClickHandler(e)}
